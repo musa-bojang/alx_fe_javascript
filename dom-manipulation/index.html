@@ -8,8 +8,18 @@
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
+
   <div id="quoteDisplay"></div>
-  <button id="newQuote">Show New Quote</button>
+
+  <div class="controls">
+    <button id="newQuote">Show New Quote</button>
+    <button id="exportJson">Export Quotes (JSON)</button>
+    <button id="importJsonBtn">Import Quotes (JSON)</button>
+    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+    <button id="clearStorage" style="background:#e23b3b">Clear Local Storage</button>
+  </div>
+
+  <!-- Form will be created dynamically -->
   <script src="script.js"></script>
 </body>
 </html>

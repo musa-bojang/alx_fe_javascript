@@ -1,47 +1,22 @@
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      text-align: center;
-      background: #f7f7f7;
-    }
+body { font-family: system-ui, Arial, sans-serif; margin: 24px; background: #f7f7f7; }
+    h1 { text-align: center; margin-bottom: 16px; }
     #quoteDisplay {
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 500px;
-      border: 2px solid #333;
-      border-radius: 8px;
-      background: white;
-      font-size: 18px;
-      font-style: italic;
-      min-height: 60px;
+      margin: 16px auto; padding: 18px; max-width: 700px;
+      background: #fff; border: 2px solid #222; border-radius: 10px;
+      min-height: 70px; font-size: 18px;
     }
-    .category {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #666;
+    .category { margin-top: 8px; font-size: 14px; color: #666; }
+    .controls {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 10px 0 20px;
     }
     button {
-      padding: 10px 15px;
-      margin: 10px;
-      border: none;
-      background: #0077ff;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
+      padding: 10px 14px; border: none; border-radius: 8px; background: #0077ff; color: #fff; cursor: pointer;
     }
-    button:hover {
-      background: #005fcc;
-    }
+    button:hover { background: #005ed1; }
     #addQuoteForm {
-      margin-top: 30px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background: #fff;
-      display: inline-block;
+      margin: 10px auto; padding: 14px; max-width: 700px;
+      background: #fff; border: 1px solid #ddd; border-radius: 10px;
+      display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px;
     }
-    #addQuoteForm input {
-      margin: 5px;
-      padding: 8px;
-    }
+    #addQuoteForm input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    #importFile { display: none; } /* we’ll trigger it from a button */
