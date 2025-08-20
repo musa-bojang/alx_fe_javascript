@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Add a new quote dynamically
-  function addQuote() {
+  function createAddQuoteForm() {
     const textInput = document.getElementById("newQuoteText");
     const categoryInput = document.getElementById("newQuoteCategory");
 
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event listeners
   newQuoteBtn.addEventListener("click", showRandomQuote);
-  addQuoteBtn.addEventListener("click", addQuote);
+  addQuoteBtn.addEventListener("click", createAddQuoteForm);
 
   // Show one quote on page load
   showRandomQuote();
