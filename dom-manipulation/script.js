@@ -10,57 +10,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const newQuoteBtn = document.getElementById("newQuote");
   const body = document.body;
 
-  // Utility: clear children of a DOM node
-  function clearElement(element) {
-    while (element.firstChild) {
-      element.removeChild(element.firstChild);
-    }
-  }
-
-  // Show random quote using DOM methods
+  // Show random quote using innerHTML
   function showRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[randomIndex];
 
-    // Clear previous content
-    clearElement(quoteDisplay);
-
-    // Create <p> for quote text
-    const quoteText = document.createElement("p");
-    quoteText.textContent = `"${randomQuote.text}"`;
-
-    // Create <div> for category
-    const categoryDiv = document.createElement("div");
-    categoryDiv.classList.add("category");
-    categoryDiv.textContent = `— ${randomQuote.category}`;
-
-    // Append to display
-    quoteDisplay.appendChild(quoteText);
-    quoteDisplay.appendChild(categoryDiv);
+    quoteDisplay.innerHTML = `
+      <p>"${randomQuote.text}"</p>
+      <div class="category">— ${randomQuote.category}</div>
+    `;
   }
 
-  // Create form dynamically
+  // Create form dynamically with innerHTML
   function createAddQuoteForm() {
     const formDiv = document.createElement("div");
     formDiv.id = "addQuoteForm";
 
-    // Input for quote text
-    const textInput = document.createElement("input");
-    textInput.id = "newQuoteText";
-    textInput.type = "text";
-    textInput.placeholder = "Enter a new quote";
+    formDiv.innerHTML = `
+      <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+      <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
+      <button id="addQuoteBtn">Add Quote</button>
+    `;
 
-    // Input for category
-    const categoryInput = document.createElement("input");
-    categoryInput.id = "newQuoteCategory";
-    categoryInput.type = "text";
-    categoryInput.placeholder = "Enter quote category";
+    body.appendChild(formDiv);
 
-    // Add button
-    const addBtn = document.createElement("button");
-    addBtn.textContent = "Add Quote";
+    // Attach event after injecting innerHTML
+    const addBtn = document.getElementById("addQuoteBtn");
+    const textInput = document.getElementById("newQuoteText");
+    const categoryInput = document.getElementById("newQuoteCategory");
 
-    // Event: add new quote
     addBtn.addEventListener("click", () => {
       const newText = textInput.value.trim();
       const newCategory = categoryInput.value.trim();
@@ -68,33 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (newText && newCategory) {
         quotes.push({ text: newText, category: newCategory });
 
-        // Show the new quote immediately
-        clearElement(quoteDisplay);
-        const newQuoteText = document.createElement("p");
-        newQuoteText.textContent = `"${newText}"`;
+        // Show immediately
+        quoteDisplay.innerHTML = `
+          <p>"${newText}"</p>
+          <div class="category">— ${newCategory}</div>
+        `;
 
-        const newCategoryDiv = document.createElement("div");
-        newCategoryDiv.classList.add("category");
-        newCategoryDiv.textContent = `— ${newCategory}`;
-
-        quoteDisplay.appendChild(newQuoteText);
-        quoteDisplay.appendChild(newCategoryDiv);
-
-        // Reset inputs
         textInput.value = "";
         categoryInput.value = "";
       } else {
         alert("Please enter both a quote and a category!");
       }
     });
-
-    // Append all to formDiv
-    formDiv.appendChild(textInput);
-    formDiv.appendChild(categoryInput);
-    formDiv.appendChild(addBtn);
-
-    // Append form to body
-    body.appendChild(formDiv);
   }
 
   // Event listeners
