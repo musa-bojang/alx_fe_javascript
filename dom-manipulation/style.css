@@ -1,0 +1,47 @@
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+      background: #f7f7f7;
+    }
+    #quoteDisplay {
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 500px;
+      border: 2px solid #333;
+      border-radius: 8px;
+      background: white;
+      font-size: 18px;
+      font-style: italic;
+      min-height: 60px;
+    }
+    .category {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 10px;
+      border: none;
+      background: #0077ff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fcc;
+    }
+    #addQuoteForm {
+      margin-top: 30px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+      display: inline-block;
+    }
+    #addQuoteForm input {
+      margin: 5px;
+      padding: 8px;
+    }
