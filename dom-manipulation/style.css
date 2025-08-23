@@ -1,22 +1,61 @@
-body { font-family: system-ui, Arial, sans-serif; margin: 24px; background: #f7f7f7; }
-    h1 { text-align: center; margin-bottom: 16px; }
-    #quoteDisplay {
-      margin: 16px auto; padding: 18px; max-width: 700px;
-      background: #fff; border: 2px solid #222; border-radius: 10px;
-      min-height: 70px; font-size: 18px;
+body{
+    font-family: system-ui, Arial, sans-serif; 
+    margin: 24px;
+    background: #f7f7f7;
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+#quoteDisplay{
+    margin: 16px auto;
+       padding: 18px;
+        max-width: 700px;
+      background: #fff;
+       border: 2px solid #222; 
+       border-radius: 10px;
+      min-height: 70px; 
+      font-size: 18px;
+}
+
+button{
+    padding: 10px 14px; 
+      border: none; 
+      border-radius: 8px; 
+      background: #0077ff; 
+      color: #fff; 
+      cursor: pointer;
+}
+   button:hover {
+     background: #005ed1; 
     }
-    .category { margin-top: 8px; font-size: 14px; color: #666; }
-    .controls {
-      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 10px 0 20px;
-    }
-    button {
-      padding: 10px 14px; border: none; border-radius: 8px; background: #0077ff; color: #fff; cursor: pointer;
-    }
-    button:hover { background: #005ed1; }
+      
     #addQuoteForm {
-      margin: 10px auto; padding: 14px; max-width: 700px;
-      background: #fff; border: 1px solid #ddd; border-radius: 10px;
-      display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px;
+      margin: 10px auto; 
+      padding: 14px; 
+      max-width: 700px;
+      background: #fff; 
+      border: 1px solid #ddd; 
+      border-radius: 10px;
+      display: grid; 
+      grid-template-columns: 1fr 1fr auto;
+       gap: 10px;
     }
-    #addQuoteForm input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
-    #importFile { display: none; } /* we’ll trigger it from a button */
+    #addQuoteForm input { 
+        padding: 10px; 
+        border: 1px solid #ccc;
+        border-radius: 6px; 
+    }
+
+    #btns{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    #btns input { 
+        padding: 10px; 
+        border: 1px solid #ccc; 
+        border-radius: 6px; 
+    }
