@@ -74,16 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cleanup
     URL.revokeObjectURL(url);
   } 
-  function importFromJsonFile(event) {
-  const fileReader = new FileReader();
-  fileReader.onload = function(event) {
-    const importedQuotes = JSON.parse(event.target.result);
-    quotes.push(...importedQuotes);
-    saveQuotes();
-    alert('Quotes imported successfully!');
-  };
-  fileReader.readAsText(event.target.files[0]);
-}
+  const importFile = document.getElementById("importFile");
+  importFile.addEventListener("change", (e) => {
+    const fileReader = new FileReader();
+    fileReader.onload = function(loadEvent) {
+      const importedQuotes = JSON.parse(loadEvent.target.result);
+      quotes.push(...importedQuotes);
+      saveQuotes();
+      alert("Quotes imported successfully!");
+    };
+    fileReader.readAsText(e.target.files[0]);
+  });
   
 
   // Event listeners
