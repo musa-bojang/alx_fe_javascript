@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const quoteDisplay = document.getElementById("quoteDisplay");
   const newQuoteBtn = document.getElementById("newQuote");
   const exportBtn = document.getElementById("exportBtn");
-  // const addQuoteBtn = document.getElementById("addQuoteBtn");
+  const categoryFilter = document.getElementById("categoryFilter");
   const formDiv = document.createElement("div");
   formDiv.id = "addQuoteForm";
   formDiv.innerHTML = `
@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("quotes", JSON.stringify(quotes));
   }
 
+  // show random quotes
+
   function showRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[randomIndex];
@@ -34,22 +36,71 @@ document.addEventListener("DOMContentLoaded", () => {
     quoteDisplay.innerHTML = ` "${randomQuote.text}" <div class="category">-${randomQuote.category}</div>`
   }
 
+  // poplate categories
+  // ✅ Step 2.1: Populate categories dynamically
+  function populateCategories() {
+    let categories = [...new Set(quotes.map(q => q.category))];
 
-    function createAddQuoteForm() {
+    categoryFilter.innerHTML = `<option value="all">All Categories</option>`;
+    categories.forEach(cat => {
+      let option = document.createElement("option");
+      option.value = cat;
+      option.textContent = cat;
+      categoryFilter.appendChild(option);
+    });
+
+    // ✅ Restore saved filter from localStorage
+    let savedCategory = localStorage.getItem("selectedCategory");
+    if (savedCategory && [...categoryFilter.options].some(opt => opt.value === savedCategory)) {
+      categoryFilter.value = savedCategory;
+    }
+  }
+  // ✅ Step 2.2: Filter quotes by category
+  function filterQuotes() {
+    let selectedCategory = categoryFilter.value;
+
+    localStorage.setItem("selectedCategory", selectedCategory); // save choice
+
+    let filteredQuotes = selectedCategory === "all"
+      ? quotes
+      : quotes.filter(q => q.category === selectedCategory);
+
+    if (filteredQuotes.length === 0) {
+      quoteDisplay.innerHTML = `<em>No quotes in this category.</em>`;
+      return;
+    }
+
+    // Show a random quote from filtered list
+    const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+    const randomQuote = filteredQuotes[randomIndex];
+    quoteDisplay.innerHTML = `"${randomQuote.text}" <div class="category">— ${randomQuote.category}</div>`;
+  }
+
+  //  create new quotes
+  function createAddQuoteForm() {
     const textInput = document.getElementById("newQuoteText");
     const categoryInput = document.getElementById("newQuoteCategory");
     const newText = textInput.value.trim();
     const newCategory = categoryInput.value.trim();
-
+  
     if (newText && newCategory) {
+      // Add new quote
       quotes.push({ text: newText, category: newCategory });
       saveQuotes();
-      // Show confirmation by displaying the new quote
+  
+      // ✅ Refresh category dropdown if a new category was added
+      populateCategories();
+  
+      // Show the newly added quote immediately
       quoteDisplay.innerHTML = `
-         "${newText}"
-         <div class="category">— ${newCategory}</div>
-       `;
-
+        "${newText}"
+        <div class="category">— ${newCategory}</div>
+      `;
+  
+      // ✅ Auto-select the new category in the filter
+      categoryFilter.value = newCategory;
+      localStorage.setItem("selectedCategory", newCategory);
+  
       // Reset fields
       textInput.value = "";
       categoryInput.value = "";
@@ -57,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please enter both a quote and a category!");
     }
   }
+  
 
   function exportJsonBtn(){
     let jsonStr = JSON.stringify(quotes, null, 2);
@@ -88,9 +140,13 @@ document.addEventListener("DOMContentLoaded", () => {
   
 
   // Event listeners
-  newQuoteBtn.addEventListener("click", showRandomQuote);
+  newQuoteBtn.addEventListener("click", filterQuotes);
   addBtn.addEventListener("click", createAddQuoteForm);
   exportBtn.addEventListener("click", exportJsonBtn);
+
+  // --- Initialize
+  populateCategories();
+  filterQuotes(); // Show first quote based on saved filter
   
 });
 

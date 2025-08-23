@@ -15,7 +15,15 @@
     <button id="importJsonBtn">Import Quotes (JSON)</button>
     <input type="file" id="importFile" accept=".json" />
   </div>
-
+  <!-- ✅ New: Category Filter -->
+  <div id="filters">
+    <label for="categoryFilter">Filter by Category:</label>
+    <select id="categoryFilter" onchange="filterQuotes()">
+      <option value="all">All Categories</option>
+      <!-- Dynamically populated categories -->
+    </select>
+  </div>
+  
   <script src="script.js"></script>
 </body>
 </html>
