@@ -132,36 +132,65 @@ document.addEventListener("DOMContentLoaded", () => {
     fileReader.readAsText(e.target.files[0]);
   });
 
-  // ✅ Step 1: Fetch quotes from server (required name)
   async function syncQuotes() {
     try {
+      // 1. Fetch server quotes
       let response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
       let serverData = await response.json();
-
-      // Convert server posts to quotes format
+  
       let serverQuotes = serverData.map(post => ({
         text: post.title,
         category: "Server"
       }));
-
-      // Conflict resolution: server data overrides local duplicates
+  
+      // 2. Conflict resolution: avoid duplicates
       serverQuotes.forEach(sq => {
         let exists = quotes.some(lq => lq.text === sq.text);
         if (!exists) {
           quotes.push(sq);
         }
       });
-
+  
+      // 3. Push new local quotes to server (simulate)
+      for (let localQuote of quotes) {
+        let isOnServer = serverQuotes.some(sq => sq.text === localQuote.text);
+        if (!isOnServer) {
+          await fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(localQuote)
+          })
+          .then(r => r.json())
+          .then(data => console.log("✅ Pushed local quote to server:", data));
+        }
+      }
+  
+      // 4. Save updates
       saveQuotes();
       populateCategories();
-      console.log("✅ Synced with server");
+      console.log("✅ Sync completed");
+  
     } catch (error) {
-      console.error("❌ Error fetching from server:", error);
+      console.error("❌ Sync failed:", error);
     }
   }
+  
+
+  // ✅ Step 1: Fetch quotes from server (required name)
+  async function fetchQuotesFromServer() {
+    await syncQuotes();
+  }
+  
 
   // Periodic sync (every 30s)
+  // Periodic sync (every 30s)
   setInterval(syncQuotes, 30000);
+  
+  // Initial sync
+  syncQuotes();
+  
   
 
   // Event listeners
@@ -172,5 +201,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Initialize
   populateCategories();
   filterQuotes();
-  syncQuotes(); // Initial fetch
+  // fetchQuotesFromServer(); // Initial fetch
 });
