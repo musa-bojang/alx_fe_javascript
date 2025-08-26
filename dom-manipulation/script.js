@@ -132,6 +132,8 @@ document.addEventListener("DOMContentLoaded", () => {
     fileReader.readAsText(e.target.files[0]);
   });
 
+  const syncNotification = document.getElementById("syncNotification");
+
   async function syncQuotes() {
     try {
       // 1. Fetch server quotes
@@ -171,9 +173,15 @@ document.addEventListener("DOMContentLoaded", () => {
       saveQuotes();
       populateCategories();
       console.log("✅ Sync completed");
+
+      // ✅ Show notification to user
+      syncNotification.textContent = "Quotes synced with server!";
+      setTimeout(() => { syncNotification.textContent = ""; }, 5000); // hide after 5s
   
     } catch (error) {
       console.error("❌ Sync failed:", error);
+      syncNotification.textContent = "Error syncing quotes!";
+      setTimeout(() => { syncNotification.textContent = ""; }, 5000);
     }
   }
   
