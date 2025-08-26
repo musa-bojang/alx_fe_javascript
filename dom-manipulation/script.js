@@ -74,9 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const categoryInput = document.getElementById("newQuoteCategory");
     const newText = textInput.value.trim();
     const newCategory = categoryInput.value.trim();
-
+  
     if (newText && newCategory) {
-      quotes.push({ text: newText, category: newCategory });
+      const newQuote = { text: newText, category: newCategory };
+      quotes.push(newQuote);
       saveQuotes();
       populateCategories();
       quoteDisplay.innerHTML = `"${newText}" <div class="category">— ${newCategory}</div>`;
@@ -84,10 +85,28 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("selectedCategory", newCategory);
       textInput.value = "";
       categoryInput.value = "";
+  
+      // ✅ Post new quote to mock server
+      fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newQuote)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("✅ Quote synced to server:", data);
+      })
+      .catch(error => {
+        console.error("❌ Error posting to server:", error);
+      });
+  
     } else {
       alert("Please enter both a quote and a category!");
     }
   }
+  
 
   function exportJsonBtn() {
     let jsonStr = JSON.stringify(quotes, null, 2);
