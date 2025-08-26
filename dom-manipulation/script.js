@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ✅ Step 1: Fetch quotes from server (required name)
-  async function fetchQuotesFromServer() {
+  async function syncQuotes() {
     try {
       let response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
       let serverData = await response.json();
@@ -161,7 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Periodic sync (every 30s)
-  setInterval(fetchQuotesFromServer, 30000);
+  setInterval(syncQuotes, 30000);
+  
 
   // Event listeners
   newQuoteBtn.addEventListener("click", filterQuotes);
@@ -171,5 +172,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Initialize
   populateCategories();
   filterQuotes();
-  fetchQuotesFromServer(); // Initial fetch
+  syncQuotes(); // Initial fetch
 });
